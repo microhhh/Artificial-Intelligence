@@ -1,10 +1,8 @@
 # coding: utf-8
 from __future__ import (print_function, unicode_literals, absolute_import)
 
-# from .priorityset import PrioritySet
+from translator.utils import *
 import math
-import queue
-que = queue.PriorityQueue()
 
 
 class PrioritySet(object):

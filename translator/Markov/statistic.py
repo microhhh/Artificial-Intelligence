@@ -10,9 +10,9 @@ SENTENCE_FILE = '../preprocess/sentence.txt'
 WORD_FILE = '../data/word.txt'
 HANZI2PINYIN_FILE = '../data/pinyin_table.txt'
 
-BASE_START = './result/base_start.json'
-BASE_EMISSION = './result/base_emission.json'
-BASE_TRANSITION = './result/base_transition.json'
+BASE_START = 'base_start.json'
+BASE_EMISSION = 'base_emission.json'
+BASE_TRANSITION = 'base_transition.json'
 
 
 def writejson2file(data, filename):

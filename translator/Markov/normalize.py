@@ -9,20 +9,20 @@ sys.path = ['../..'] + sys.path
 
 
 
-BASE_START_FILE      = './result/base_start.json'
-BASE_EMISSION_FILE   = './result/base_emission.json'
-BASE_TRANSITION_FILE = './result/base_transition.json'
+BASE_START_FILE      = 'base_start.json'
+BASE_EMISSION_FILE   = 'base_emission.json'
+BASE_TRANSITION_FILE = 'base_transition.json'
 PY2HZ_FILE            = '../data/pinyin_table.txt'
 
 
-FIN_PY2HZ_FILE      = '../../Pinyin2Hanzi/data/hmm_py2hz.json'
-FIN_START_FILE      = '../../Pinyin2Hanzi/data/hmm_start.json'
-FIN_EMISSION_FILE   = '../../Pinyin2Hanzi/data/hmm_emission.json'
-FIN_TRANSITION_FILE = '../../Pinyin2Hanzi/data/hmm_transition.json'
+FIN_PY2HZ_FILE      = 'hmm_py2hz.json'
+FIN_START_FILE      = 'hmm_start.json'
+FIN_EMISSION_FILE   = 'hmm_emission.json'
+FIN_TRANSITION_FILE = 'hmm_transition.json'
 
 
-PINYIN_NUM = 411.
-HANZI_NUM  = 20903.
+PINYIN_NUM = 406.
+HANZI_NUM  = 6763.
 
 def writejson2file(obj, filename):
     with open(filename, 'w', encoding='UTF-8') as outfile:
@@ -45,6 +45,7 @@ def gen_py2hz():
         chars = chars.strip()
         if len(py)>0 and len(chars)>0:
             data[py] = chars
+            print(py)
 
     writejson2file(data, FIN_PY2HZ_FILE)
 

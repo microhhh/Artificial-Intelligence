@@ -1,7 +1,6 @@
 # coding: utf-8
 from __future__ import (print_function, unicode_literals, absolute_import)
 
-
 import os
 import json
 
@@ -9,14 +8,14 @@ import json
 DATA    = 'data'
 DEFAULT = 'default'
 
-class DefaultHmmParams():
+class HMM():
 
     def __init__(self,):
         current_dir = self.pwd()
-        self.py2hz_dict      = self.readjson(os.path.join(current_dir, 'data', 'hmm_py2hz.json'))
-        self.start_dict      = self.readjson(os.path.join(current_dir, 'data', 'hmm_start.json'))
-        self.emission_dict   = self.readjson(os.path.join(current_dir, 'data', 'hmm_emission.json'))
-        self.transition_dict = self.readjson(os.path.join(current_dir, 'data', 'hmm_transition.json'))
+        self.py2hz_dict = self.readjson(os.path.join(current_dir, 'hmm_py2hz.json'))
+        self.start_dict = self.readjson(os.path.join(current_dir, 'hmm_start.json'))
+        self.emission_dict = self.readjson(os.path.join(current_dir, 'hmm_emission.json'))
+        self.transition_dict = self.readjson(os.path.join(current_dir, 'hmm_transition.json'))
 
     def readjson(self, filename):
         with open(filename) as outfile:

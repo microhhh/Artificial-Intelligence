@@ -5,6 +5,7 @@ import math
 
 hmm_params = HMM()
 
+
 def viterbi(observations, path_num=6, log=False, min_prob=3.14e-200):
     V = [{}]
     t = 0

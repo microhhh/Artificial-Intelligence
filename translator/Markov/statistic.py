@@ -1,24 +1,18 @@
 # coding: utf-8
 
 import sys
-import json
+import pypinyin
 from translator.utils import *
+
 sys.path.append('.')
 
-
-SENTENCE_FILE = '../preprocess/sentence.txt'
+SENTENCE_FILE = '../data/sentence.txt'
 WORD_FILE = '../data/word.txt'
 HANZI2PINYIN_FILE = '../data/pinyin_table.txt'
 
 BASE_START = 'init_start.json'
 BASE_EMISSION = 'init_emission.json'
 BASE_TRANSITION = 'init_transition.json'
-
-
-def writejson2file(data, filename):
-    with open(filename, 'w', encoding='UTF-8') as outfile:
-        data = json.dumps(data, indent=4, sort_keys=True)
-        outfile.write(data)
 
 
 def process_hanzipinyin(emission):
@@ -31,18 +25,30 @@ def process_hanzipinyin(emission):
         pinyin, hanzis = line.split('=')
         hanzis = hanzis.split(' ')
         hanzis = [hz for hz in hanzis]
-        print(pinyin)
         for hanzi in hanzis:
             emission.setdefault(hanzi, {})
             emission[hanzi].setdefault(pinyin, 0)
             emission[hanzi][pinyin] += 1
 
 
+def topinyin(s):
+    py_list = pypinyin.lazy_pinyin(s)
+    result = []
+    for py in py_list:
+
+        if py == '〇':
+            result.append('ling')
+        else:
+            result.append(py)
+
+    return result
+
+
 def read_from_sentence_txt(start, emission, transition):
     ## ./result/sentence.txt
     print('read from sentence.txt')
     for line in open(SENTENCE_FILE, encoding='UTF-8'):
-        line =line.strip()
+        line = line.strip()
         if len(line) < 2:
             continue
         if not is_chinese(line):
@@ -113,7 +119,6 @@ def read_from_word_txt(start, emission, transition):
 
 
 def gen_init():
-
     start = {}
     emission = {}
     transition = {}
@@ -123,9 +128,9 @@ def gen_init():
     read_from_sentence_txt(start, emission, transition)
     read_from_word_txt(start, emission, transition)
 
-    writejson2file(start, BASE_START)
-    writejson2file(emission, BASE_EMISSION)
-    writejson2file(transition, BASE_TRANSITION)
+    write_to_file(start, BASE_START)
+    write_to_file(emission, BASE_EMISSION)
+    write_to_file(transition, BASE_TRANSITION)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,17 @@
 # coding: utf-8
-import pypinyin
 import heapq
+import json
+
+
+def correct(pinyin):
+    if pinyin == 'qv':
+        return 'qu'
+    elif pinyin == 'xv':
+        return 'xu'
+    elif pinyin == 'lue':
+        return 'lve'
+    else:
+        return pinyin
 
 
 def is_chinese(v):
@@ -9,17 +20,15 @@ def is_chinese(v):
     return all('\u4e00' <= c <= '\u9fff' or c == '〇' for c in v)
 
 
-def topinyin(s):
-    py_list = pypinyin.lazy_pinyin(s)
-    result = []
-    for py in py_list:
+def write_to_file(obj, filename):
+    with open(filename, 'w', encoding='UTF-8') as outfile:
+        data = json.dumps(obj, indent=4, sort_keys=True)
+        outfile.write(data)
 
-        if py == '〇':
-            result.append('ling')
-        else:
-            result.append(py)
 
-    return result
+def read_from_file(filename):
+    with open(filename, encoding='UTF-8') as outfile:
+        return json.load(outfile)
 
 
 class Item(object):

@@ -2,6 +2,7 @@
 
 import sys
 from translator.model.viterbi import *
+
 sys.path.append('..')
 
 if __name__ == '__main__':

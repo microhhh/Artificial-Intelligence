@@ -3,7 +3,8 @@ import os
 from translator.utils import *
 
 ARTICLE_DIR = '../data/sina_news_utf8'
-SENTENCE_FILE = './sentence.txt'
+SENTENCE_FILE = '../data/sentence.txt'
+
 
 def clear_sentences(content):
     content = content.replace(' ', '')
@@ -14,7 +15,7 @@ def clear_sentences(content):
         if is_chinese(char):
             s += char
         else:
-            if s is not '':
+            if s != '':
                 sentences.append(s)
             s = ''
     sentences.append(s)

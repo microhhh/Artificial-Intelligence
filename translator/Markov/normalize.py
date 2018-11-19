@@ -1,5 +1,5 @@
 # coding: utf-8
-import json
+from translator.utils import *
 
 INIT_START_FILE = 'init_start.json'
 INIT_EMISSION_FILE = 'init_emission.json'
@@ -15,17 +15,6 @@ PINYIN_NUM = 406.
 HANZI_NUM = 6763.
 
 
-def write_to_file(obj, filename):
-    with open(filename, 'w', encoding='UTF-8') as outfile:
-        data = json.dumps(obj, indent=4, sort_keys=True)
-        outfile.write(data)
-
-
-def read_from_file(filename):
-    with open(filename, encoding='UTF-8') as outfile:
-        return json.load(outfile)
-
-
 def generate_pinyin_to_hanzi():
     data = {}
     for line in open(PINYIN_TABLE, encoding='UTF-8'):
@@ -38,7 +27,6 @@ def generate_pinyin_to_hanzi():
         chars = chars.strip()
         if len(py) > 0 and len(chars) > 0:
             data[py] = chars
-            print(py)
 
     write_to_file(data, PY_TO_HZ_FILE)
 

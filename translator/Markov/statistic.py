@@ -10,9 +10,9 @@ SENTENCE_FILE = '../preprocess/sentence.txt'
 WORD_FILE = '../data/word.txt'
 HANZI2PINYIN_FILE = '../data/pinyin_table.txt'
 
-BASE_START = 'base_start.json'
-BASE_EMISSION = 'base_emission.json'
-BASE_TRANSITION = 'base_transition.json'
+BASE_START = 'init_start.json'
+BASE_EMISSION = 'init_emission.json'
+BASE_TRANSITION = 'init_transition.json'
 
 
 def writejson2file(data, filename):
@@ -112,22 +112,21 @@ def read_from_word_txt(start, emission, transition):
             transition[f][t] += num
 
 
-def gen_base():
-    """ 先执行gen_middle()函数 """
-    start = {}  # {'你':2, '号':1}
-    emission = {}  # 应该是 {'泥': {'ni':1.0}, '了':{'liao':0.5, 'le':0.5}}  而不是 {'ni': {'泥': 2, '你':10}, 'hao': {...} } ×
-    transition = {}  # {'你': {'好':10, '们':2}, '我': {}}
+def gen_init():
+
+    start = {}
+    emission = {}
+    transition = {}
 
     process_hanzipinyin(emission)
 
     read_from_sentence_txt(start, emission, transition)
     read_from_word_txt(start, emission, transition)
 
-    ## write to file
     writejson2file(start, BASE_START)
     writejson2file(emission, BASE_EMISSION)
     writejson2file(transition, BASE_TRANSITION)
 
 
 if __name__ == '__main__':
-    gen_base()
+    gen_init()

@@ -1,14 +1,15 @@
 # coding: utf-8
-
 import pypinyin
+import heapq
+
 
 def is_chinese(v):
     if len(v) == 0:
         return False
     return all('\u4e00' <= c <= '\u9fff' or c == '〇' for c in v)
 
+
 def topinyin(s):
-    #s都是汉字
     py_list = pypinyin.lazy_pinyin(s)
     result = []
     for py in py_list:
@@ -21,15 +22,11 @@ def topinyin(s):
     return result
 
 
-# coding: utf-8
-
-import heapq
-
 class Item(object):
 
     def __init__(self, score, path):
         self.__score = score
-        self.__path  = path
+        self.__path = path
 
     @property
     def score(self):
@@ -71,7 +68,7 @@ class PrioritySet(object):
         self.data = []
 
     def put(self, score, path):
-        assert(isinstance(path, list) == True)
+        assert (isinstance(path, list) == True)
         heapq.heappush(self.data, [score, Item(score, path)])
         while len(self.data) > self.capacity:
             heapq.heappop(self.data)

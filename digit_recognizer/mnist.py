@@ -7,17 +7,13 @@ from torchvision.transforms import *
 from PIL import Image
 
 
-class MNIST_data(Dataset):
-    """MNIST dataset"""
+class MNIST(Dataset):
 
-    def __init__(self, file_path, n_pixels,
-                 transform=transforms.Compose([transforms.ToPILImage(), transforms.ToTensor(),
-                                               transforms.Normalize(mean=(0.5,), std=(0.5,))])
-                 ):
+    def __init__(self, file_path, n_pixels, transform=transforms.ToPILImage()):
 
         df = pd.read_csv(file_path)
         if len(df.columns) == n_pixels + 1:
-            # training data
+            # train data
             self.X = df.iloc[:, 1:].values.reshape((-1, 28, 28)).astype(np.uint8)[:, :, :, None]
             self.y = torch.from_numpy(df.iloc[:, 0].values)
 

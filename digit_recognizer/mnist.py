@@ -1,7 +1,8 @@
+# coding: utf-8
 import pandas as pd
 import numpy as np
 import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 from torchvision.transforms import *
 from PIL import Image
 
@@ -15,14 +16,15 @@ class MNIST_data(Dataset):
                  ):
 
         df = pd.read_csv(file_path)
-        if len(df.columns) == n_pixels:
-            # test data
-            self.X = df.values.reshape((-1, 28, 28)).astype(np.uint8)[:, :, :, None]
-            self.y = None
-        else:
+        if len(df.columns) == n_pixels + 1:
             # training data
             self.X = df.iloc[:, 1:].values.reshape((-1, 28, 28)).astype(np.uint8)[:, :, :, None]
             self.y = torch.from_numpy(df.iloc[:, 0].values)
+
+        else:
+            # test data
+            self.X = df.values.reshape((-1, 28, 28)).astype(np.uint8)[:, :, :, None]
+            self.y = None
         self.transform = transform
 
     def __len__(self):
@@ -41,10 +43,6 @@ class RandomShift(object):
 
     @staticmethod
     def get_params(shift):
-        """Get parameters for ``rotate`` for a random rotation.
-        Returns:
-            sequence: params to be passed to ``rotate`` for random rotation.
-        """
         hshift, vshift = np.random.uniform(-shift, shift, size=2)
         return hshift, vshift
 

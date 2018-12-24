@@ -9,7 +9,10 @@ from PIL import Image
 
 class MNIST(Dataset):
 
-    def __init__(self, file_path, n_pixels, transform=transforms.ToPILImage()):
+    def __init__(self, file_path, n_pixels,
+                 transform=transforms.Compose([transforms.ToPILImage(), transforms.ToTensor(),
+                                               transforms.Normalize(mean=(0.5,), std=(0.5,))])
+                 ):
 
         df = pd.read_csv(file_path)
         if len(df.columns) == n_pixels + 1:

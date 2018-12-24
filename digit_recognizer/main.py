@@ -76,7 +76,7 @@ def evaluate(data_loader):
 
 def prediciton(data_loader):
     net.eval()
-    result = torch.LongTensor()
+    test_pred = torch.LongTensor()
 
     for i, data in enumerate(data_loader):
         data = Variable(data, volatile=True)
@@ -84,9 +84,10 @@ def prediciton(data_loader):
             data = data.cuda()
 
         output = net(data)
+
         pred = output.cpu().data.max(1, keepdim=True)[1]
-        result = torch.cat((result, pred), dim=0)
-    return result
+        test_pred = torch.cat((test_pred, pred), dim=0)
+    return test_pred
 
 
 if __name__ == '__main__':
